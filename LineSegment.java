@@ -1,8 +1,10 @@
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Hashtable;
 
 public class LineSegment
 {
-
-    //begin and end are the end points of line segment; no guaranties on order
+    //begin and end are the end points of line segment; no guarantees on order
     private Point begin;
     private Point end;
 
@@ -40,6 +42,49 @@ public class LineSegment
      */
     public Globals.GeometricObjectType CollinearLineSegmentsIntersection(LineSegment ls, Point pointResult, LineSegment lineSegmentResult)
     {
+        // Here we map points to labels, so we know to which segment they belong.
+        // For convenience "P1", "P2" belong to this line segment,
+        // and "P3", "P4" belong to the other line segment (ls).
+        Hashtable<Point, String> ht = new Hashtable<>();
+        ht.put(this.begin, "P1");   // This line segment beginning.
+        ht.put(this.end, "P2");     // This line segment end.
+        ht.put(ls.begin, "P3");     // Other line segment beginning.
+        ht.put(ls.end, "P4");       // Other line segment end.
+
+        // This arraylist is used for maintaining the order of the points.
+        ArrayList<Point> points = new ArrayList<>();
+        points.add(this.begin);
+        points.add(this.end);
+        points.add(ls.begin);
+        points.add(ls.end);
+
+        // The arraylist now guarantees order of the points by index number [0,3].
+        // Only use after points.sort() returns!
+        points.sort(new Comparator<Point>() 
+        {
+            // Comparator orders points primarily by their x value, 
+            // but also taking into account their y value for special cases.
+            public int compare(Point p1,Point p2)
+            {
+                double xWeight = 10000.0;
+                double yWeight = 100.0;
+                double sortKeyP1 = xWeight * p1.getX() + yWeight * p1.getY();
+                double sortKeyP2 = xWeight * p2.getX() + yWeight * p2.getY();
+
+                return Double.compare(sortKeyP1, sortKeyP2);
+            }
+        });
+
+        // Testing the ordering of the points.
+        System.out.printf("Printing points in order: %s%s, %s%s, %s%s, %s%s %n", 
+        ht.get(points.get(0)), points.get(0),
+        ht.get(points.get(1)), points.get(1),
+        ht.get(points.get(2)), points.get(2),
+        ht.get(points.get(3)), points.get(3));
+
+        // TODO: Implement all the cases for collinear line segments.
+        // Should use sorted arraylist and hashtable to obtain necessary information.
+
         return Globals.GeometricObjectType.NO_GEOMETRIC_OBJECT;
     }
     
