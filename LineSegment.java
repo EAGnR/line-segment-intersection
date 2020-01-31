@@ -84,9 +84,6 @@ public class LineSegment
         
         String sortedPoints = ht.get(points.get(0)) + " " + ht.get(points.get(1)) + " " 
         		+ ht.get(points.get(2)) + " " + ht.get(points.get(3));
-
-        // TODO: Implement all the cases for collinear line segments.
-        // Should use sorted arraylist and hashtable to obtain necessary information.
         
         //if the two middle points are equal, that is the point of intersection
         if (points.get(1).equals(points.get(2)))
