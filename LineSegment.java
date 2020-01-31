@@ -76,16 +76,46 @@ public class LineSegment
         });
 
         // Testing the ordering of the points.
-        System.out.printf("Printing points in order: %s%s, %s%s, %s%s, %s%s %n", 
+        /*System.out.printf("Printing points in order: %s%s, %s%s, %s%s, %s%s %n", 
         ht.get(points.get(0)), points.get(0),
         ht.get(points.get(1)), points.get(1),
         ht.get(points.get(2)), points.get(2),
-        ht.get(points.get(3)), points.get(3));
+        ht.get(points.get(3)), points.get(3));*/
+        
+        String sortedPoints = ht.get(points.get(0)) + " " + ht.get(points.get(1)) + " " 
+        		+ ht.get(points.get(2)) + " " + ht.get(points.get(3));
 
         // TODO: Implement all the cases for collinear line segments.
         // Should use sorted arraylist and hashtable to obtain necessary information.
-
-        return Globals.GeometricObjectType.NO_GEOMETRIC_OBJECT;
+        
+        //if the two middle points are equal, that is the point of intersection
+        if (points.get(1).equals(points.get(2)))
+        {
+        	Point result = points.get(1);
+        	pointResult.setX(result.getX());
+        	pointResult.setY(result.getY());
+        	return Globals.GeometricObjectType.POINT;
+        }
+        //middle points are not equal, this is the case where the segments do not intersect (one is to the left of the other)
+        else if (sortedPoints.equals("P1 P2 P3 P4") || sortedPoints.equals("P2 P1 P3 P4") 
+        		|| sortedPoints.equals("P1 P2 P4 P3") || sortedPoints.equals("P2 P1 P4 P3")
+        		|| sortedPoints.equals("P3 P4 P1 P2") || sortedPoints.equals("P4 P3 P1 P2") 
+        		|| sortedPoints.equals("P3 P4 P2 P1") || sortedPoints.equals("P4 P3 P2 P1"))
+        {
+        	return Globals.GeometricObjectType.NO_GEOMETRIC_OBJECT;
+        }
+        //in all other cases, the middle two points form the segment of intersection
+        else
+        {
+        	Point resultBegin = points.get(1);
+        	Point resultEnd = points.get(2);
+        	
+        	lineSegmentResult.begin.setX(resultBegin.getX());
+        	lineSegmentResult.begin.setY(resultBegin.getY());
+        	lineSegmentResult.end.setX(resultEnd.getX());
+        	lineSegmentResult.end.setY(resultEnd.getY());
+        	return Globals.GeometricObjectType.LINE_SEGMENT;
+        }
     }
     
     public String toString()
