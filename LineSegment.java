@@ -61,7 +61,7 @@ public class LineSegment
         points[3] = ls.end;
 
         // The array now guarantees order of the points by index number [0,3].
-        // Only use after Arrays.sort(points, comparator) returns!
+        // Only use after Arrays.sort() returns!
         Arrays.sort(points, comparator);
         
         String sortedPoints = "";
