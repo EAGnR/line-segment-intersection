@@ -13,6 +13,7 @@ public class Point
         x = x1;
         y = y1;
     }
+
     /**
      * Calculates distance between this point and point <code>p</code>.
      *
@@ -56,7 +57,6 @@ public class Point
     	if(!other.getClass().getName().equals("Point")) return false;
     	
     	Point otherPoint = (Point) other;
-    	double EPSILON = 0.00000001;
-    	return Math.abs(this.x - otherPoint.x) < EPSILON && Math.abs(this.y - otherPoint.y) < EPSILON;
+    	return Math.abs(this.x - otherPoint.x) < Globals.POINT_EPSILON && Math.abs(this.y - otherPoint.y) < Globals.POINT_EPSILON;
     }
 }
