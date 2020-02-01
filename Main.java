@@ -73,7 +73,7 @@ public class Main
     			                  s17, s18, s17, s19, s17, s20, s18, s19, s20, s19, s21, s19, s21, s21};
     	String[] answers = {"[(4.0, 13.0), (8.0, 21.0)]", "[(4.0, 13.0), (14.0, 33.0)]", "[(4.0, 13.0), (8.0, 21.0)]", 
     			            "[(2.0, 9.0), (4.0, 13.0)]", "(4.0, 13.0)", "[(6.0, 17.0), (8.0, 21.0)]", "no intersection", /*y = 2x + 5*/
-    			            "[(2.0, 2.25), (2.0, 0.5)]", "[(2.0, -1.0), (2.0, 0.5)]", "[(2.0, 2.25), (2.0, 3.0)]", 
+    			            "[(2.0, 0.5), (2.0, 2.25)]", "[(2.0, -1.0), (2.0, 0.5)]", "[(2.0, 2.25), (2.0, 3.0)]", 
     			            "(2.0, 0.5)", "no intersection","[(2.0, -0.5), (2.0, 0.5)]", "[(2.0, -0.5), (2.0, 3.0)]", /*x = 2*/
     			            "[(-1.0, 13.0), (0.6, 6.6)]", "[(1.0, 5.0), (5.0, -11.0)]", "[(-2.0, 17.0), (1.0, 5.0)]", "(1.0, 5.0)", "no intersection",
     			            "[(0.6, 6.6), (1.0, 5.0)]", "[(0.6, 6.6), (5.0, -11.0)]", /*y = -4x + 9*/
@@ -82,7 +82,8 @@ public class Main
         
         LineSegment intersectionSegment = new LineSegment();
         Point intersectionPoint = new Point();
-        
+		String calculatedSol = "";
+		String manualSol = "";
         for(int i = 0; i < segments.length; i++)
         {
         	LineSegment lineSegment1, lineSegment2;
@@ -100,22 +101,29 @@ public class Main
         	}
         	
         	System.out.println("Intersection between " + lineSegment1 + " and " + lineSegment2 + " is: ");
-            Globals.GeometricObjectType intersectionType = lineSegment1.CollinearLineSegmentsIntersection(lineSegment2, intersectionPoint, intersectionSegment);
+			Globals.GeometricObjectType intersectionType = lineSegment1.CollinearLineSegmentsIntersection(lineSegment2, intersectionPoint, intersectionSegment);
 
             if (intersectionType == Globals.GeometricObjectType.LINE_SEGMENT)
             {
-            	System.out.println(intersectionSegment);
+				calculatedSol = intersectionSegment.toString();
             }
             else if (intersectionType == Globals.GeometricObjectType.POINT)
             {
-            	System.out.println(intersectionPoint);
+				calculatedSol = intersectionPoint.toString();
             }
             else
             {
-            	System.out.println("no intersection");
+				calculatedSol = "no intersection";
             }
-            
-            System.out.println(answers[i / 2] + " is the actual answer\n");
+			
+			manualSol = answers[i / 2];
+			System.out.println(calculatedSol);
+			System.out.println(manualSol + " is the actual answer");
+
+			if(manualSol.equals(calculatedSol))
+				System.out.println("Status: PASSED\n");
+			else
+				System.out.println("Status: FAILED\n");
         }
     }
 }
